@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["davideghz@gmail.com"]
 
   spec.summary       = %q{Ruby wrapper for Paladins API.}
-  spec.description   = %q{This gem wraps Paladins API. See https://docs.google.com/document/d/1OFS-3ocSx-1Rvg4afAnEHlT3917MAK_6eJTR6rzr-BM/edit for more information.}
+  spec.description   = %q{Ruby wrapper for Hi-Rez Studios Paladins API.}
   spec.homepage      = "https://www.github.com/davideghz/paladins"
   spec.license       = "MIT"
 
