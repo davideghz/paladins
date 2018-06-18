@@ -1,8 +1,8 @@
 # Paladins
 
-This gem wraps Paladins API.
+This gem wraps Hi-Rez Studios' Paladins API.
 
-See [API DOCS](https://docs.google.com/document/d/1OFS-3ocSx-1Rvg4afAnEHlT3917MAK_6eJTR6rzr-BM) for more information.
+See [Paladins API DOCS](https://docs.google.com/document/d/1OFS-3ocSx-1Rvg4afAnEHlT3917MAK_6eJTR6rzr-BM) for more information.
 
 ## Status
 
