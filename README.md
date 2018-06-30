@@ -6,7 +6,7 @@ See [Paladins API DOCS](https://docs.google.com/document/d/1OFS-3ocSx-1Rvg4afAnE
 
 ## Status
 
-*NOT PRODUCTION READY*
+Alpha (see CHANGELOG.md)
 
 ## Installation
 
@@ -26,13 +26,26 @@ Or install it yourself as:
 
 ## Usage
 
-Create an initializer in `config/initializers` to specify your `dev_id` and `auth_key` in a block:
+Create an initializer in `config/initializers` to set your `dev_id` and `auth_key` in a block:
 
 ```ruby
 Paladins.configure do |config|
   config.dev_id = ''
   config.auth_key = ''
 end
+
+Paladins.getfoobar
+```
+
+or
+
+```ruby
+config = Paladins::Configuration.new
+config.dev_id = ''
+config.auth_key = ''
+
+client = Paladins::Client.new(config)
+client.getfoobar
 ```
 
 Configs are then available like:
