@@ -23,16 +23,25 @@ module Paladins
 
   def self.gethirezserverstatus
     client = Paladins::Client.new(configuration)
+    client.extend(MonitorMixin)
     client.get_hirez_server_status
   end
 
   def self.ping
     client = Paladins::Client.new(configuration)
+    client.extend(MonitorMixin)
     client.ping
   end
 
   def self.getchampionranks(player_name)
     client = Paladins::Client.new(configuration)
+    client.extend(MonitorMixin)
     client.get_champion_ranks(player_name)
+  end
+
+  def self.getplayer(player_name)
+    client = Paladins::Client.new(configuration)
+    client.extend(MonitorMixin)
+    client.get_player(player_name)
   end
 end

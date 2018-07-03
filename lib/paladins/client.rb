@@ -1,10 +1,13 @@
 require 'faraday'
 require 'json'
 require 'digest'
+require 'monitor'
 
 module Paladins
   class Client
-    @@session_id = nil
+    # include MonitorMixin
+
+    @@session = { id: nil, updated_at: nil }
 
     attr_accessor :api_url, :dev_id, :auth_key, :response_format
 
@@ -23,25 +26,30 @@ module Paladins
     def create_session
       # /createsession[ResponseFormat]/{developerId}/{signature}/{timestamp}
       response = Faraday.get(url(method: 'createsession', session: false))
-      @@session_id = JSON.parse(response.body).dig('session_id')
-
-      @@session_id
+      @@session[:updated_at] = Time.now
+      @@session[:id] = JSON.parse(response.body).dig('session_id')
     end
 
     def test_session
       # /testsession[ResponseFormat]/{developerId}/{signature}/{session}/{timestamp}
       time_now = Paladins::Utils.time_now
-      response = Faraday.get("#{@api_url}/testsessionJson/#{@dev_id}/#{get_signature('testsession', time_now)}/#{@@session_id}/#{time_now}")
+      response = Faraday.get("#{@api_url}/testsessionJson/#{@dev_id}/#{get_signature('testsession', time_now)}/#{@@session[:id]}/#{time_now}")
       attributes = JSON.parse(response.body)
     end
 
     def session_expired?
-      true
-      ## TODO: return TRUE only when #test_session returns something saying session is expired
+      self.synchronize do
+        if Time.now - @@session[:updated_at] > 60*12
+          @@session[:updated_at] = Time.now
+          true
+        else
+          false
+        end
+      end
     end
 
     def get_or_create_session
-      create_session if ( @@session_id.nil? || session_expired? )
+      ( @@session[:id].nil? || session_expired? ) ? create_session : @@session[:id]
     end
 
     def ping
@@ -59,6 +67,12 @@ module Paladins
     def get_champion_ranks(player_name)
       # /getchampionranks[ResponseFormat]/{developerId}/{signature}/{session}/{timestamp}/{player}
       response = Faraday.get(url(method: 'getchampionranks', session: true) + "/#{player_name}")
+      attributes = JSON.parse(response.body)
+    end
+
+    def get_player(player_name)
+      # /getplayer[ResponseFormat]/{developerId}/{signature}/{session}/{timestamp}/{player}
+      response = Faraday.get(url(method: 'getplayer', session: true) + "/#{player_name}")
       attributes = JSON.parse(response.body)
     end
 
