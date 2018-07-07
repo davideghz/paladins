@@ -38,6 +38,7 @@ module Paladins
     end
 
     def session_expired?
+      # synchronize secure taht only one thread at a time can access @@session
       self.synchronize do
         if Time.now - @@session[:updated_at] > 60*12
           @@session[:updated_at] = Time.now
@@ -73,6 +74,18 @@ module Paladins
     def get_player(player_name)
       # /getplayer[ResponseFormat]/{developerId}/{signature}/{session}/{timestamp}/{player}
       response = Faraday.get(url(method: 'getplayer', session: true) + "/#{player_name}")
+      attributes = JSON.parse(response.body)
+    end
+
+    def get_player_status(player_name)
+      # /getplayerstatus[ResponseFormat]/{developerId}/{signature}/{session}/{timestamp}/{player}
+      response = Faraday.get(url(method: 'getplayerstatus', session: true) + "/#{player_name}")
+      attributes = JSON.parse(response.body)
+    end
+
+    def get_match_player_details(match_id)
+      # /getmatchplayerdetails[ResponseFormat]/{developerId}/{signature}/{session}/{timestamp}/{match_id}
+      response = Faraday.get(url(method: 'getmatchplayerdetails', session: true) + "/#{match_id}")
       attributes = JSON.parse(response.body)
     end
 

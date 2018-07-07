@@ -1,3 +1,8 @@
+## 0.1.4 (alpha)
+
+- added support for method Paladins.get_player_status(player_name)
+- added support for method Paladins.getmatchplayerdetails(match_id)
+
 ## 0.1.3 (alpha)
 
 - added support for method Paladins.getplayer(player_name)

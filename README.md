@@ -6,7 +6,7 @@ See [Paladins API DOCS](https://docs.google.com/document/d/1OFS-3ocSx-1Rvg4afAnE
 
 ## Status
 
-Alpha (see CHANGELOG.md)
+Alpha (see [CHANGELOG.md](https://github.com/davideghz/paladins/blob/master/README.md))
 
 ## Installation
 

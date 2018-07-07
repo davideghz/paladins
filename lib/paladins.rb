@@ -44,4 +44,16 @@ module Paladins
     client.extend(MonitorMixin)
     client.get_player(player_name)
   end
+
+  def self.getplayerstatus(player_name)
+    client = Paladins::Client.new(configuration)
+    client.extend(MonitorMixin)
+    client.get_player_status(player_name)
+  end
+
+  def self.getmatchplayerdetails(match_id)
+    client = Paladins::Client.new(configuration)
+    client.extend(MonitorMixin)
+    client.get_match_player_details(match_id)
+  end
 end
